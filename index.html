@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Strong Bond Contract Services</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Caveat:wght@500;700&family=Patrick+Hand&display=swap');
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --mint: #a8e6cf;
+    --mint-light: #d4f5e6;
+    --mint-dark: #6bc4a6;
+    --peach: #ffb7b2;
+    --peach-light: #ffd5d2;
+    --peach-dark: #ff9a93;
+    --sky: #a8d8ea;
+    --sky-light: #d1ecf5;
+    --sky-dark: #7bc4db;
+    --lavender: #c3aed6;
+    --lavender-light: #e0d4ec;
+    --yellow: #ffeaa7;
+    --yellow-light: #fff4d1;
+    --cream: #fef9ef;
+    --text-dark: #4a4a6a;
+    --text-medium: #6a6a8a;
+    --white: #ffffff;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Nunito', sans-serif;
+    color: var(--text-dark);
+    background: var(--cream);
+  }
+
+  .slides-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: scale(0.95) translateY(30px);
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: scale(1) translateY(0);
+  }
+
+  /* ===== FLOATING DOODLES ===== */
+  .doodle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    animation: floatDoodle 6s ease-in-out infinite;
+    opacity: 0.25;
+    font-size: 28px;
+  }
+
+  .doodle:nth-child(odd) { animation-duration: 7s; }
+  .doodle:nth-child(3n) { animation-duration: 5s; animation-delay: 1s; }
+  .doodle:nth-child(4n) { animation-duration: 8s; animation-delay: 2s; }
+
+  @keyframes floatDoodle {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-15px) rotate(5deg); }
+    50% { transform: translateY(-25px) rotate(-3deg); }
+    75% { transform: translateY(-10px) rotate(4deg); }
+  }
+
+  /* ===== STARS ===== */
+  .star-field {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .twinkle-star {
+    position: absolute;
+    width: 6px; height: 6px;
+    background: var(--yellow);
+    border-radius: 50%;
+    animation: twinkle 2s ease-in-out infinite;
+    box-shadow: 0 0 6px var(--yellow), 0 0 12px rgba(255,234,167,0.3);
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.3); }
+  }
+
+  /* ===== CONTRACT CARD ===== */
+  .contract-card {
+    position: relative;
+    z-index: 1;
+    background: var(--white);
+    border-radius: 24px;
+    padding: 45px 40px;
+    max-width: 620px;
+    width: 100%;
+    box-shadow:
+      0 4px 30px rgba(168,230,207,0.2),
+      0 1px 8px rgba(0,0,0,0.06),
+      inset 0 0 0 3px var(--mint),
+      inset 0 0 0 6px var(--white),
+      inset 0 0 0 8px var(--peach-light);
+    text-align: center;
+  }
+
+  .contract-card::before {
+    content: '';
+    position: absolute;
+    top: 14px; left: 14px; right: 14px; bottom: 14px;
+    border: 2px dashed var(--mint);
+    border-radius: 16px;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .contract-card::after {
+    content: '⭐';
+    position: absolute;
+    top: -14px; right: -14px;
+    font-size: 30px;
+    animation: spinStar 4s linear infinite;
+  }
+
+  @keyframes spinStar {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.2); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+
+  /* Corner decorations */
+  .corner-deco {
+    position: absolute;
+    font-size: 22px;
+    opacity: 0.7;
+  }
+  .corner-deco.tl { top: 20px; left: 22px; }
+  .corner-deco.tr { top: 20px; right: 22px; }
+  .corner-deco.bl { bottom: 20px; left: 22px; }
+  .corner-deco.br { bottom: 20px; right: 22px; }
+
+  /* ===== SLIDE 1 ===== */
+  .slide-1 {
+    background: linear-gradient(135deg, var(--mint-light) 0%, var(--sky-light) 50%, var(--peach-light) 100%);
+  }
+
+  .logo-icon {
+    font-size: 64px;
+    margin-bottom: 10px;
+    animation: bounceIn 1s ease;
+    display: inline-block;
+  }
+
+  @keyframes bounceIn {
+    0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+    50% { transform: scale(1.2) rotate(5deg); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .main-heading {
+    font-family: 'Caveat', cursive;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .sub-text {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.2rem;
+    color: var(--text-medium);
+    margin-bottom: 30px;
+    line-height: 1.5;
+  }
+
+  .stamp {
+    display: inline-block;
+    border: 3px solid var(--peach-dark);
+    border-radius: 12px;
+    padding: 6px 18px;
+    font-family: 'Caveat', cursive;
+    color: var(--peach-dark);
+    font-size: 0.95rem;
+    font-weight: 700;
+    transform: rotate(-4deg);
+    margin-bottom: 25px;
+    opacity: 0.8;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--white);
+    background: linear-gradient(135deg, var(--mint-dark), var(--sky-dark));
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(107,196,166,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%);
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%) rotate(25deg); }
+    100% { transform: translateX(100%) rotate(25deg); }
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 30px rgba(107,196,166,0.5);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  .btn-arrow {
+    font-size: 1.3rem;
+    transition: transform 0.3s ease;
+  }
+
+  .btn-primary:hover .btn-arrow {
+    transform: translateX(5px);
+  }
+
+  /* ===== SLIDE 2 ===== */
+  .slide-2 {
+    background: linear-gradient(135deg, var(--sky-light) 0%, var(--lavender-light) 50%, var(--mint-light) 100%);
+  }
+
+  .slide-2 .contract-card {
+    padding: 35px 30px;
+  }
+
+  .clauses-heading {
+    font-family: 'Caveat', cursive;
+    font-size: 2rem;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+  }
+
+  .clauses-sub {
+    font-size: 0.85rem;
+    color: var(--text-medium);
+    margin-bottom: 25px;
+    font-style: italic;
+  }
+
+  .clause-list {
+    list-style: none;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .clause-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: linear-gradient(135deg, var(--cream), var(--white));
+    border-radius: 16px;
+    padding: 16px 18px;
+    border: 2px solid transparent;
+    transition: all 0.4s ease;
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  .clause-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .clause-item:nth-child(1) { border-color: var(--peach-light); }
+  .clause-item:nth-child(2) { border-color: var(--mint); }
+  .clause-item:nth-child(3) { border-color: var(--sky); }
+  .clause-item:nth-child(4) { border-color: var(--yellow); }
+
+  .clause-item:hover {
+    transform: translateX(6px) scale(1.01);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+
+  .clause-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: var(--white);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .clause-item:nth-child(1) .clause-icon { background: var(--peach-light); }
+  .clause-item:nth-child(2) .clause-icon { background: var(--mint-light); }
+  .clause-item:nth-child(3) .clause-icon { background: var(--sky-light); }
+  .clause-item:nth-child(4) .clause-icon { background: var(--yellow-light); }
+
+  .clause-content h3 {
+    font-size: 1rem;
+    font-weight: 800;
+    margin-bottom: 3px;
+    color: var(--text-dark);
+  }
+
+  .clause-content p {
+    font-size: 0.88rem;
+    color: var(--text-medium);
+    line-height: 1.4;
+  }
+
+  .clause-number {
+    font-family: 'Caveat', cursive;
+    font-size: 0.8rem;
+    color: var(--lavender);
+    font-weight: 700;
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--white);
+    background: linear-gradient(135deg, var(--lavender), var(--peach));
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(195,174,214,0.4);
+  }
+
+  .btn-secondary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(195,174,214,0.5);
+  }
+
+  /* ===== SLIDE 3 ===== */
+  .slide-3 {
+    background: linear-gradient(135deg, var(--peach-light) 0%, var(--yellow-light) 50%, var(--mint-light) 100%);
+  }
+
+  .scanner-note {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    line-height: 1.6;
+    margin-bottom: 30px;
+    padding: 16px;
+    background: var(--yellow-light);
+    border-radius: 14px;
+    border-left: 4px solid var(--yellow);
+  }
+
+  .scanner-note strong {
+    color: var(--peach-dark);
+  }
+
+  .fingerprint-area {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+
+  .fingerprint-btn {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 4px solid var(--mint);
+    background: radial-gradient(circle, var(--white) 0%, var(--mint-light) 100%);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: 0 0 0 0 rgba(168,230,207,0.4);
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(168,230,207,0.4), 0 0 30px rgba(168,230,207,0.2); }
+    50% { box-shadow: 0 0 0 15px rgba(168,230,207,0), 0 0 40px rgba(168,230,207,0.3); }
+  }
+
+  .fingerprint-btn:hover {
+    transform: scale(1.05);
+    border-color: var(--mint-dark);
+  }
+
+  .fingerprint-btn:active {
+    transform: scale(0.95);
+  }
+
+  .fingerprint-icon {
+    font-size: 60px;
+    line-height: 1;
+  }
+
+  .fingerprint-text {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-medium);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .scan-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 180px; height: 180px;
+    border: 3px dashed var(--mint);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: rotateSlow 8s linear infinite;
+    opacity: 0.4;
+  }
+
+  @keyframes rotateSlow {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  .scanner-label {
+    font-size: 0.9rem;
+    color: var(--text-medium);
+    font-style: italic;
+  }
+
+  /* Scanning animation */
+  .scanning .fingerprint-btn {
+    animation: none;
+    border-color: var(--sky-dark);
+    background: radial-gradient(circle, var(--sky-light) 0%, var(--mint-light) 100%);
+  }
+
+  .scan-line {
+    display: none;
+    position: absolute;
+    top: 10%;
+    left: 15%;
+    width: 70%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--mint-dark), transparent);
+    border-radius: 2px;
+    animation: scanDown 1.5s ease-in-out infinite;
+    box-shadow: 0 0 10px var(--mint-dark);
+  }
+
+  .scanning .scan-line {
+    display: block;
+  }
+
+  @keyframes scanDown {
+    0% { top: 10%; }
+    50% { top: 85%; }
+    100% { top: 10%; }
+  }
+
+  /* ===== SLIDE 4 ===== */
+  .slide-4 {
+    background: linear-gradient(135deg, var(--mint-light) 0%, var(--yellow-light) 30%, var(--peach-light) 60%, var(--sky-light) 100%);
+  }
+
+  .slide-4 .contract-card {
+    overflow: visible;
+  }
+
+  .congrats-text {
+    font-family: 'Caveat', cursive;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--mint-dark);
+    margin-bottom: 6px;
+    animation: popIn 0.6s ease;
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .congrats-msg {
+    font-size: 1.05rem;
+    color: var(--text-dark);
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--yellow-light), var(--yellow));
+    border: 3px solid var(--yellow);
+    border-radius: 20px;
+    padding: 14px 28px;
+    margin-bottom: 10px;
+    animation: badgePop 0.8s ease 0.3s both;
+    box-shadow: 0 4px 20px rgba(255,234,167,0.5);
+  }
+
+  @keyframes badgePop {
+    0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+    60% { transform: scale(1.1) rotate(3deg); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .badge-icon {
+    font-size: 36px;
+  }
+
+  .badge-text {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+  }
+
+  .no-cancel {
+    font-size: 0.85rem;
+    color: var(--peach-dark);
+    font-weight: 700;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .handshake-big {
+    font-size: 50px;
+    display: inline-block;
+    margin: 10px 0;
+    animation: shakehands 1s ease-in-out infinite;
+  }
+
+  @keyframes shakehands {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(10deg); }
+    75% { transform: rotate(-10deg); }
+  }
+
+  /* ===== CONFETTI ===== */
+  .confetti-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 100;
+    overflow: hidden;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    top: -20px;
+    width: 10px;
+    height: 16px;
+    border-radius: 3px;
+    animation: confettiFall linear forwards;
+  }
+
+  @keyframes confettiFall {
+    0% {
+      transform: translateY(0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+    80% { opacity: 1; }
+    100% {
+      transform: translateY(110vh) rotate(720deg) scale(0.5);
+      opacity: 0;
+    }
+  }
+
+  /* ===== PROGRESS DOTS ===== */
+  .progress-dots {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 50;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(106,106,138,0.25);
+    transition: all 0.4s ease;
+  }
+
+  .dot.active {
+    background: var(--mint-dark);
+    transform: scale(1.3);
+    box-shadow: 0 0 8px rgba(107,196,166,0.5);
+  }
+
+  /* ===== BACK BUTTON ===== */
+  .back-btn {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    background: rgba(255,255,255,0.7);
+    border: 2px solid var(--mint);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    z-index: 5;
+    backdrop-filter: blur(4px);
+  }
+
+  .back-btn:hover {
+    background: var(--mint-light);
+    transform: scale(1.1);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .contract-card {
+      padding: 30px 20px;
+      border-radius: 18px;
+      margin: 10px;
+    }
+
+    .contract-card::before {
+      top: 10px; left: 10px; right: 10px; bottom: 10px;
+    }
+
+    .main-heading {
+      font-size: 1.8rem;
+    }
+
+    .clauses-heading {
+      font-size: 1.5rem;
+    }
+
+    .clause-item {
+      padding: 12px 14px;
+      gap: 10px;
+    }
+
+    .clause-icon {
+      width: 40px;
+      height: 40px;
+      font-size: 26px;
+      border-radius: 12px;
+    }
+
+    .clause-content h3 {
+      font-size: 0.92rem;
+    }
+
+    .clause-content p {
+      font-size: 0.82rem;
+    }
+
+    .fingerprint-btn {
+      width: 130px;
+      height: 130px;
+    }
+
+    .fingerprint-icon {
+      font-size: 48px;
+    }
+
+    .scan-ring {
+      width: 150px;
+      height: 150px;
+    }
+
+    .congrats-text {
+      font-size: 2rem;
+    }
+
+    .btn-primary, .btn-secondary {
+      padding: 14px 28px;
+      font-size: 0.95rem;
+    }
+
+    .corner-deco { font-size: 16px; }
+    .corner-deco.tl { top: 14px; left: 14px; }
+    .corner-deco.tr { top: 14px; right: 14px; }
+    .corner-deco.bl { bottom: 14px; left: 14px; }
+    .corner-deco.br { bottom: 14px; right: 14px; }
+  }
+
+  /* Watermark */
+  .watermark {
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+    font-size: 0.65rem;
+    color: rgba(106,106,138,0.2);
+    font-weight: 700;
+    z-index: 2;
+    letter-spacing: 0.5px;
+  }
+
+  /* Clause seal */
+  .official-seal {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border: 3px double var(--peach);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    font-size: 28px;
+    background: var(--peach-light);
+    animation: sealPulse 3s ease-in-out infinite;
+  }
+
+  @keyframes sealPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  /* Ribbon */
+  .ribbon {
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--mint);
+    color: var(--white);
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 4px 18px;
+    border-radius: 0 0 10px 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(107,196,166,0.3);
+  }
+
+  /* Fun wiggle */
+  .wiggle {
+    display: inline-block;
+    animation: wiggle 2s ease-in-out infinite;
+  }
+
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    10% { transform: rotate(6deg); }
+    20% { transform: rotate(-6deg); }
+    30% { transform: rotate(4deg); }
+    40% { transform: rotate(-4deg); }
+    50% { transform: rotate(0deg); }
+  }
+
+  .emoji-float {
+    display: inline-block;
+    animation: emojiFloat 3s ease-in-out infinite;
+  }
+
+  @keyframes emojiFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .sparkle-text {
+    background: linear-gradient(135deg, var(--mint-dark), var(--sky-dark), var(--lavender));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating Doodles -->
+<div class="doodle" style="top:8%;left:5%;">✿</div>
+<div class="doodle" style="top:15%;right:8%;">☁️</div>
+<div class="doodle" style="top:70%;left:3%;">🌸</div>
+<div class="doodle" style="top:80%;right:5%;">✦</div>
+<div class="doodle" style="top:40%;left:2%;">♡</div>
+<div class="doodle" style="top:55%;right:3%;">✧</div>
+<div class="doodle" style="top:25%;left:92%;">🌿</div>
+<div class="doodle" style="top:90%;left:50%;">🍀</div>
+<div class="doodle" style="top:5%;left:45%;">⭐</div>
+<div class="doodle" style="top:60%;left:95%;">🦋</div>
+
+<!-- Star Field -->
+<div class="star-field" id="starField"></div>
+
+<!-- Progress Dots -->
+<div class="progress-dots" id="progressDots">
+  <div class="dot active" data-slide="0"></div>
+  <div class="dot" data-slide="1"></div>
+  <div class="dot" data-slide="2"></div>
+  <div class="dot" data-slide="3"></div>
+</div>
+
+<!-- Confetti Container -->
+<div class="confetti-container" id="confettiContainer"></div>
+
+<div class="slides-container">
+
+  <!-- ===== SLIDE 1: WELCOME ===== -->
+  <div class="slide slide-1 active" id="slide0">
+    <div class="contract-card">
+      <div class="ribbon">OFFICIAL DOCUMENT</div>
+      <span class="corner-deco tl">✿</span>
+      <span class="corner-deco tr">✿</span>
+      <span class="corner-deco bl">⭐</span>
+      <span class="corner-deco br">⭐</span>
+
+      <div class="logo-icon">📜</div>
+      <h1 class="main-heading">Welcome to our<br><span class="sparkle-text">Strong Bond Contract Services!</span></h1>
+      <p class="sub-text">Making friendship official, one clause at a time. <span class="emoji-float">✨</span></p>
+      <div class="stamp">EST. Since Day One</div>
+      <br><br>
+      <button class="btn-primary" onclick="goToSlide(1)">
+        Let's Read the Contract First
+        <span class="btn-arrow">→</span>
+      </button>
+      <div class="watermark">Strong Bond Contract Services™</div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 2: CLAUSES ===== -->
+  <div class="slide slide-2" id="slide1">
+    <div class="contract-card">
+      <button class="back-btn" onclick="goToSlide(0)">←</button>
+      <span class="corner-deco tl">📌</span>
+      <span class="corner-deco tr">📌</span>
+      <span class="corner-deco bl">✦</span>
+      <span class="corner-deco br">✦</span>
+
+      <div class="official-seal">📋</div>
+      <h2 class="clauses-heading">Official Friendship Clauses for <span class="sparkle-text">Jassie</span></h2>
+      <p class="clauses-sub">Each clause has been carefully reviewed and is non-negotiable 😤✨</p>
+
+      <ul class="clause-list" id="clauseList">
+        <li class="clause-item">
+          <div class="clause-icon">🌸</div>
+          <div class="clause-content">
+            <span class="clause-number">Clause §1</span>
+            <h3>The Always-Cute Clause</h3>
+            <p>Dedicated to her naturally sweet and cute behavior that makes every conversation better.</p>
+          </div>
+        </li>
+        <li class="clause-item">
+          <div class="clause-icon">🤝</div>
+          <div class="clause-content">
+            <span class="clause-number">Clause §2</span>
+            <h3>The Helpful Nature Mandate</h3>
+            <p>For always being there and helping others out — no matter what, no questions asked.</p>
+          </div>
+        </li>
+        <li class="clause-item">
+          <div class="clause-icon">🫂</div>
+          <div class="clause-content">
+            <span class="clause-number">Clause §3</span>
+            <h3>The Anti-Left-Out Policy</h3>
+            <p>For her amazing openness that ensures no one ever feels left out in a group. Ever.</p>
+          </div>
+        </li>
+        <li class="clause-item">
+          <div class="clause-icon">😊</div>
+          <div class="clause-content">
+            <span class="clause-number">Clause §4</span>
+            <h3>The Signature Smile</h3>
+            <p>The most important part of this contract — her contagious smile that lights up the room!</p>
+          </div>
+        </li>
+      </ul>
+
+      <button class="btn-secondary" onclick="goToSlide(2)">
+        I Agree to All Clauses <span class="wiggle">✍️</span>
+      </button>
+      <div class="watermark">Page 2 of 4</div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 3: FINGERPRINT ===== -->
+  <div class="slide slide-3" id="slide2">
+    <div class="contract-card">
+      <button class="back-btn" onclick="goToSlide(1)">←</button>
+      <span class="corner-deco tl">🔒</span>
+      <span class="corner-deco tr">🔒</span>
+      <span class="corner-deco bl">✿</span>
+      <span class="corner-deco br">✿</span>
+
+      <h2 class="clauses-heading"><span class="wiggle">🛡️</span> Final Verification</h2>
+
+      <div class="scanner-note">
+        <strong>⚠️ Wait! Read Carefully:</strong><br>
+        Only place your finger on the scanner below if you <em>truly</em> wish for our bond to remain <strong>strong forever</strong>. This action is irreversible!
+      </div>
+
+      <div class="fingerprint-area" id="fingerprintArea">
+        <div class="scan-ring"></div>
+        <button class="fingerprint-btn" id="fingerprintBtn" onclick="startScan()">
+          <span class="fingerprint-icon">👆</span>
+          <span class="fingerprint-text">Tap Here</span>
+          <div class="scan-line"></div>
+        </button>
+      </div>
+
+      <p class="scanner-label" id="scannerLabel">↑ Place your finger on the scanner ↑</p>
+
+      <div class="watermark">Biometric Auth v2.0</div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 4: SUCCESS ===== -->
+  <div class="slide slide-4" id="slide3">
+    <div class="contract-card">
+      <span class="corner-deco tl">🎉</span>
+      <span class="corner-deco tr">🎊</span>
+      <span class="corner-deco bl">💫</span>
+      <span class="corner-deco br">🌟</span>
+
+      <h2 class="congrats-text">🎉 CONGRATULATIONS! 🎉</h2>
+
+      <div class="handshake-big">🤝</div>
+
+      <p class="congrats-msg">
+        Our bond has been <strong>successfully</strong> and <strong>legally registered</strong> as
+        <span style="color:var(--mint-dark); font-weight:900; font-size:1.2em;">STRONG</span>.<br>
+        No cancellations allowed! <span class="emoji-float">✨</span>
+      </p>
+
+      <div class="badge">
+        <span class="badge-icon">🏅</span>
+        <span class="badge-text">Certified Besties</span>
+        <span class="badge-icon">🏅</span>
+      </div>
+
+      <p class="no-cancel">
+        🔐 Contract ID: #BFF-JASSIE-2025 &nbsp;|&nbsp; Status: <span style="color:var(--mint-dark);">ACTIVE FOREVER</span>
+      </p>
+
+      <div class="watermark">Strong Bond Contract Services™ — All rights reserved forever 💚</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ===== STAR FIELD =====
+  const starField = document.getElementById('starField');
+  for (let i = 0; i < 30; i++) {
+    const star = document.createElement('div');
+    star.className = 'twinkle-star';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.animationDelay = Math.random() * 3 + 's';
+    star.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+    star.style.width = (4 + Math.random() * 5) + 'px';
+    star.style.height = star.style.width;
+    starField.appendChild(star);
+  }
+
+  // ===== SLIDE NAVIGATION =====
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+
+  function goToSlide(n) {
+    if (n < 0 || n >= slides.length) return;
+    slides[currentSlide].classList.remove('active');
+    dots[currentSlide].classList.remove('active');
+    currentSlide = n;
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+
+    // Trigger clause animations on slide 2
+    if (n === 1) {
+      animateClauses();
+    }
+
+    // Trigger confetti on slide 4
+    if (n === 3) {
+      launchConfetti();
+    }
+  }
+
+  // ===== CLAUSE ANIMATIONS =====
+  function animateClauses() {
+    const items = document.querySelectorAll('.clause-item');
+    items.forEach((item, i) => {
+      item.classList.remove('visible');
+      setTimeout(() => {
+        item.classList.add('visible');
+      }, 200 + i * 200);
+    });
+  }
+
+  // ===== FINGERPRINT SCAN =====
+  let scanning = false;
+  function startScan() {
+    if (scanning) return;
+    scanning = true;
+
+    const area = document.getElementById('fingerprintArea');
+    const label = document.getElementById('scannerLabel');
+    const btn = document.getElementById('fingerprintBtn');
+
+    area.classList.add('scanning');
+    label.textContent = '🔍 Scanning... Please hold still...';
+    label.style.color = 'var(--sky-dark)';
+    btn.querySelector('.fingerprint-text').textContent = 'Scanning...';
+
+    setTimeout(() => {
+      label.textContent = '🔍 Verifying friendship level...';
+    }, 1200);
+
+    setTimeout(() => {
+      label.textContent = '✅ Scan Complete! Bond Level: MAXIMUM! 💚';
+      label.style.color = 'var(--mint-dark)';
+      label.style.fontWeight = '700';
+      btn.querySelector('.fingerprint-icon').textContent = '✅';
+      btn.querySelector('.fingerprint-text').textContent = 'Verified!';
+      btn.style.borderColor = 'var(--mint-dark)';
+      btn.style.background = 'radial-gradient(circle, var(--mint-light) 0%, var(--mint) 100%)';
+      area.classList.remove('scanning');
+    }, 2800);
+
+    setTimeout(() => {
+      goToSlide(3);
+    }, 4200);
+  }
+
+  // ===== CONFETTI =====
+  function launchConfetti() {
+    const container = document.getElementById('confettiContainer');
+    container.innerHTML = '';
+    const colors = ['#a8e6cf','#ffb7b2','#a8d8ea','#c3aed6','#ffeaa7','#ff9a93','#7bc4db','#6bc4a6','#e0d4ec','#fff4d1'];
+    const shapes = ['▪','●','▲','★','♦','✦'];
+
+    for (let i = 0; i < 100; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random() * 100 + '%';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.animationDuration = (2 + Math.random() * 3) + 's';
+      piece.style.animationDelay = Math.random() * 2 + 's';
+      piece.style.width = (6 + Math.random() * 10) + 'px';
+      piece.style.height = (8 + Math.random() * 14) + 'px';
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '3px';
+      piece.style.transform = `rotate(${Math.random()*360}deg)`;
+      container.appendChild(piece);
+    }
+
+    // Second wave
+    setTimeout(() => {
+      for (let i = 0; i < 50; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = Math.random() * 100 + '%';
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDuration = (2 + Math.random() * 3) + 's';
+        piece.style.animationDelay = Math.random() * 1.5 + 's';
+        piece.style.width = (6 + Math.random() * 10) + 'px';
+        piece.style.height = (8 + Math.random() * 14) + 'px';
+        piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '3px';
+        container.appendChild(piece);
+      }
+    }, 1500);
+
+    // Cleanup
+    setTimeout(() => {
+      container.innerHTML = '';
+    }, 8000);
+  }
+</script>
+
+</body>
+</html>
